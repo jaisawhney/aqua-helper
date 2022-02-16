@@ -1,5 +1,6 @@
 from flask import Flask
 from db import db
+from blueprints.main import main_views
 import models
 import os
 
@@ -17,10 +18,7 @@ def create_db():
     db.create_all()
 
 
-@app.route("/")
-def index():
-    return "Hello World!"
-
+app.register_blueprint(main_views)
 
 if __name__ == "__main__":
     db.init_app(app)
