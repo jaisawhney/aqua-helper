@@ -6,3 +6,26 @@ class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String, nullable=False)
     password = db.Column(db.String, nullable=False)
+    aquariums = db.relationship("Aquarium", backref="user")
+
+
+class Aquarium(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
+    name = db.Column(db.String, nullable=False)
+    livestock = db.relationship("Livestock", backref="aquarium")
+    actions = db.relationship("Action", backref="aquarium")
+
+
+class Livestock(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    aquarium_id = db.Column(db.Integer, db.ForeignKey("aquarium.id"), nullable=False)
+    name = db.Column(db.String, nullable=False)
+    added_on = db.Column(db.Date, nullable=False)
+
+
+class Action(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    aquarium_id = db.Column(db.Integer, db.ForeignKey("aquarium.id"), nullable=False)
+    description = db.Column(db.String, nullable=False)
+    due_on = db.Column(db.Date, nullable=False)
