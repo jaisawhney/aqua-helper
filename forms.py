@@ -1,9 +1,10 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, EmailField, PasswordField, SubmitField
+from wtforms import StringField, EmailField, PasswordField, TextAreaField, DateField, SubmitField
 from wtforms.validators import DataRequired, ValidationError
+from wtforms_sqlalchemy.fields import QuerySelectField
 from werkzeug.security import check_password_hash
 
-from models import User
+from models import User, Aquarium
 
 
 class LoginForm(FlaskForm):
@@ -32,3 +33,21 @@ class SignupForm(FlaskForm):
         if user:
             raise ValidationError("That email is already being used!")
 
+
+class AquariumForm(FlaskForm):
+    name = StringField("Name", validators=[DataRequired()])
+    submit = SubmitField("Submit")
+
+
+class AquariumLivestockForm(FlaskForm):
+    name = StringField("Name", validators=[DataRequired()])
+    aquarium = QuerySelectField("Name", validators=[DataRequired()], query_factory=lambda: Aquarium.query,
+                                get_label=lambda aquarium: aquarium.name)
+    submit = SubmitField("Submit")
+
+
+class AquariumActionsForm(FlaskForm):
+    name = StringField("Name", validators=[DataRequired()])
+    description = TextAreaField("Description", validators=[DataRequired()])
+    due_on = DateField("Date Due", validators=[DataRequired()])
+    submit = SubmitField("Submit")
