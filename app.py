@@ -1,6 +1,10 @@
 from flask import Flask
 from db import db
 from blueprints.main import main_views
+from blueprints.actions import actions_views
+from blueprints.aquariums import aquariums_views
+from blueprints.livestock import livestock_views
+
 from flask_login import LoginManager
 
 import models
@@ -29,6 +33,9 @@ def create_db():
 
 
 app.register_blueprint(main_views)
+app.register_blueprint(actions_views)
+app.register_blueprint(aquariums_views)
+app.register_blueprint(livestock_views)
 
 if __name__ == "__main__":
     db.init_app(app)
