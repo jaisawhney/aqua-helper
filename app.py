@@ -18,12 +18,11 @@ app.config.update(
 )
 
 login_manager = LoginManager(app=app)
-login_manager.login_view = "auth.login"
+login_manager.login_view = "main.login"
 
 
 @login_manager.user_loader
 def load_user(user_id):
-    print("test")
     return models.User.query.get(user_id)
 
 
