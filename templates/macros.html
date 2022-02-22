@@ -1,0 +1,5 @@
+{% macro nav_link(endpoint, link_text) %}
+<a class="nav-link {{ ('active' if request.endpoint.endswith(endpoint) else '') }}"
+   href="{{ url_for(endpoint) }}">{{link_text}}</a>
+{% endmacro %}
+

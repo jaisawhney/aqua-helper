@@ -1,0 +1,30 @@
+{% from "macros.html" import nav_link with context %}
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+        <a class="navbar-brand" href="{{ url_for('main.index') }}">Navbar</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsableNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="collapsableNavbar">
+            <div class="navbar-nav ms-auto">
+
+                {{ nav_link('main.index', "Home") }}
+
+                {% if current_user.is_authenticated %}
+
+                {{ nav_link('aquariums.index', "Aquariums") }}
+                {{ nav_link('actions.index', "To-do") }}
+                {{ nav_link('main.logout', "Logout") }}
+
+                {% else %}
+
+                {{ nav_link('main.login', "Log In") }}
+                {{ nav_link('main.register', " Sign Up") }}
+
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+</nav>
