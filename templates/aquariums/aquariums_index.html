@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <div class="bg-white p-3 m-4">
+        <h1>Aquariums</h1>
+        <a href="{{ url_for('aquariums.new') }}">Create New</a>
+
+        {% for aquarium in aquariums %}
+        <div class="card mb-2">
+            <div class="card-body">
+                <h5 class="card-title">{{aquarium.name}}</h5>
+                <p class="text-muted mb-0"># Actions: {{ aquarium.actions | length }}</p>
+                <p class="text-muted my-1"># Livestock: {{ aquariums.actions | length }}</p>
+
+                <a href="#" class="card-link">Actions</a>
+                <a href="#" class="card-link">Livestock</a>
+                <a href="{{ url_for('aquariums.edit', aquarium_id=aquarium.id) }}" class="card-link">Edit</a>
+                <form class="d-inline" action="{{ url_for('aquariums.delete', aquarium_id=aquarium.id) }}"
+                      method="post">
+                    <button type="submit" class="card-link align-baseline btn btn-link text-danger">Delete</button>
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
