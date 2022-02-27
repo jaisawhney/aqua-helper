@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <div class="bg-white p-3 m-4">
+        <h1>Livestock for "{{ aquarium.name }}"</h1>
+        <a href="{{ url_for('livestock.new', aquarium_id=aquarium.id) }}">Add livestock</a>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Added On</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for livestock in aquarium.livestock %}
+
+            <tr>
+                <td class="align-middle">{{ livestock.name }}</td>
+                <td class="align-middle">{{ livestock.quantity }}</td>
+                <td class="align-middle">{{ livestock.added_on }}</td>
+                <td class="align-middle">
+                    <form action="{{ url_for('livestock.delete', aquarium_id=aquarium.id,livestock_id=livestock.id) }}" method="POST">
+                        <button type="submit" class="btn btn-link text-danger">Delete</button>
+                    </form>
+                </td>
+
+            </tr>
+
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

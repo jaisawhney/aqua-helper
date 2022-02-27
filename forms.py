@@ -1,5 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, EmailField, PasswordField, TextAreaField, DateField, SubmitField
+from wtforms import StringField, EmailField, PasswordField, TextAreaField, DateField, SubmitField, DateTimeField, \
+    IntegerField
 from wtforms.validators import DataRequired, ValidationError
 from wtforms_sqlalchemy.fields import QuerySelectField
 from werkzeug.security import check_password_hash
@@ -41,8 +42,8 @@ class AquariumForm(FlaskForm):
 
 class AquariumLivestockForm(FlaskForm):
     name = StringField("Name", validators=[DataRequired()])
-    aquarium = QuerySelectField("Name", validators=[DataRequired()], query_factory=lambda: Aquarium.query,
-                                get_label=lambda aquarium: aquarium.name)
+    quantity = IntegerField("Quantity", validators=[DataRequired()])
+    added_on = DateField("Added On", validators=[DataRequired()])
     submit = SubmitField("Submit")
 
 

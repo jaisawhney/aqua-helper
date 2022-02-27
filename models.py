@@ -21,6 +21,7 @@ class Livestock(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     aquarium_id = db.Column(db.Integer, db.ForeignKey("aquarium.id"), nullable=False)
     name = db.Column(db.String, nullable=False)
+    quantity = db.Column(db.Integer, nullable=False, default=1)
     added_on = db.Column(db.Date, nullable=False)
 
 
