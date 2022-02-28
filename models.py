@@ -28,5 +28,6 @@ class Livestock(db.Model):
 class Action(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     aquarium_id = db.Column(db.Integer, db.ForeignKey("aquarium.id"), nullable=False)
+    name = db.Column(db.String, nullable=False)
     description = db.Column(db.String, nullable=False)
     due_on = db.Column(db.Date, nullable=False)

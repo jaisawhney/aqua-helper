@@ -39,9 +39,11 @@ def new(aquarium_id):
 @livestock_views.route("/<string:livestock_id>/delete/", methods=["POST"])
 @login_required
 def delete(aquarium_id, livestock_id):
-    livestock_query = Livestock.query.filter(Livestock.id == livestock_id, Livestock.aquarium_id == aquarium_id,
-                                             Livestock.aquarium.has(user_id=current_user.id))
+    livestock_query = Livestock.query.filter_by(id=livestock_id, aquarium_id=aquarium_id)
     livestock = livestock_query.first()
+    if not livestock or livestock.aquarium.user_id != current_user.id:
+        return redirect(url_for("actions.index", aquarium_id=aquarium_id))
+
     if livestock:
         aquarium = livestock.aquarium
         livestock_query.delete(synchronize_session="fetch")

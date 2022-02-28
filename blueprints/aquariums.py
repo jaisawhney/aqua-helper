@@ -28,7 +28,7 @@ def new():
         db.session.commit()
         return redirect(url_for("aquariums.index"))
 
-    return render_template("aquariums/aquariums_new_form.html", form=form)
+    return render_template("aquariums/aquariums_new.html", form=form)
 
 
 @aquariums_views.route("/<string:aquarium_id>/edit", methods=["GET", "POST"])
@@ -46,7 +46,7 @@ def edit(aquarium_id):
         db.session.commit()
         return redirect(url_for("aquariums.index"))
 
-    return render_template("aquariums/aquariums_edit_form.html", form=form, aquarium=aquarium)
+    return render_template("aquariums/aquariums_edit.html", form=form, aquarium=aquarium)
 
 
 @aquariums_views.route("/<string:aquarium_id>/delete", methods=["POST"])

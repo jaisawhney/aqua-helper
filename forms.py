@@ -1,8 +1,8 @@
+from datetime import date
 from flask_wtf import FlaskForm
 from wtforms import StringField, EmailField, PasswordField, TextAreaField, DateField, SubmitField, DateTimeField, \
     IntegerField
 from wtforms.validators import DataRequired, ValidationError
-from wtforms_sqlalchemy.fields import QuerySelectField
 from werkzeug.security import check_password_hash
 
 from models import User, Aquarium
@@ -52,3 +52,7 @@ class AquariumActionsForm(FlaskForm):
     description = TextAreaField("Description", validators=[DataRequired()])
     due_on = DateField("Date Due", validators=[DataRequired()])
     submit = SubmitField("Submit")
+
+    def validate_due_on(self, date_field):
+        if date.today() > date_field.data:
+            raise ValidationError("The date may not be in the past.")

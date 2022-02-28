@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <div class="bg-white p-3 m-4">
+        <h1>Actions for "{{ aquarium.name }}"</h1>
+        <a href="{{ url_for('actions.new', aquarium_id=aquarium.id) }}">Add action</a>
+
+        <div class="row mx-auto mt-3 g-3">
+            {% for action in aquarium.actions %}
+            <div class="col-md-6">
+                <div class="card {{ 'border-danger' if date.today() > action.due_on else '' }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ action.name }}</h5>
+                        <p class="card-text mb-1 overflow-auto" style="max-height: 150px">{{ action.description }}</p>
+                        <a href="{{ url_for('actions.edit', aquarium_id=aquarium.id, action_id=action.id) }}"
+                           class="btn btn-primary btn-sm">Edit</a>
+                        <form action="{{ url_for('actions.delete', aquarium_id=action.aquarium.id, action_id=action.id) }}"
+                              method="POST" class="d-inline">
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                        <p class="card-text"><small><b>Due On</b></small>
+                            <small class="text-muted">{{ action.due_on }}</small></p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
