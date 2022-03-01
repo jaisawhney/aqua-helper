@@ -51,7 +51,7 @@ def edit(aquarium_id, action_id):
     if form.validate_on_submit():
         action.name = form.name.data
         action.description = form.description.data
-        form.due_on = form.due_on.data
+        action.due_on = form.due_on.data
 
         db.session.add(action)
         db.session.commit()

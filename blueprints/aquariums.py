@@ -15,7 +15,7 @@ def index():
     return render_template("aquariums/aquariums_index.html", aquariums=aquariums)
 
 
-@aquariums_views.route("/new", methods=["GET", "POST"])
+@aquariums_views.route("/new/", methods=["GET", "POST"])
 @login_required
 def new():
     form = AquariumForm()
@@ -31,7 +31,7 @@ def new():
     return render_template("aquariums/aquariums_new.html", form=form)
 
 
-@aquariums_views.route("/<string:aquarium_id>/edit", methods=["GET", "POST"])
+@aquariums_views.route("/<string:aquarium_id>/edit/", methods=["GET", "POST"])
 @login_required
 def edit(aquarium_id):
     aquarium = Aquarium.query.filter_by(id=aquarium_id, user_id=current_user.id).first()
@@ -49,12 +49,11 @@ def edit(aquarium_id):
     return render_template("aquariums/aquariums_edit.html", form=form, aquarium=aquarium)
 
 
-@aquariums_views.route("/<string:aquarium_id>/delete", methods=["POST"])
+@aquariums_views.route("/<string:aquarium_id>/delete/", methods=["POST"])
 @login_required
 def delete(aquarium_id):
     aquarium = Aquarium.query.filter_by(id=aquarium_id, user_id=current_user.id)
-    if aquarium:
+    if aquarium.first():
         aquarium.delete()
         db.session.commit()
-
     return redirect(url_for("aquariums.index"))
