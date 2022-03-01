@@ -11,12 +11,13 @@ import models
 import os
 
 app = Flask(__name__)
+
+database_url = os.getenv("DATABASE_URL", "sqlite:///database.db").replace("postgres://", "postgresql://", 1)
 app.config.update(
     SECRET_KEY=os.environ.get("SECRET_KEY", os.urandom(6)),
-    SQLALCHEMY_DATABASE_URI=os.getenv("DATABASE_URL", "sqlite:///database.db"),
+    SQLALCHEMY_DATABASE_URI=database_url,
     SQLALCHEMY_TRACK_MODIFICATIONS=False
 )
-
 login_manager = LoginManager(app=app)
 login_manager.login_view = "main.login"
 
@@ -28,6 +29,7 @@ def load_user(user_id):
 
 @app.before_first_request
 def create_db():
+    db.init_app(app)
     db.create_all()
 
 
@@ -37,5 +39,4 @@ app.register_blueprint(aquariums_views)
 app.register_blueprint(livestock_views)
 
 if __name__ == "__main__":
-    db.init_app(app)
     app.run(host="0.0.0.0", port=os.environ.get("PORT", 3000))
