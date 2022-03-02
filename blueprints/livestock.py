@@ -9,6 +9,7 @@ livestock_views = Blueprint("livestock", __name__, url_prefix="/aquariums/<strin
 
 
 @livestock_views.route("/")
+@login_required
 def index(aquarium_id):
     aquarium = Aquarium.query.filter_by(id=aquarium_id, user_id=current_user.id).first()
     if not aquarium:

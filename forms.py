@@ -21,7 +21,7 @@ class LoginForm(FlaskForm):
     def validate_password(self, password):
         user = User.query.filter_by(email=self.email.data).first()
         if user and not check_password_hash(user.password, password.data):
-            raise ValidationError("That password does not match the user!")
+            raise ValidationError("Incorrect password!")
 
 
 class SignupForm(FlaskForm):
