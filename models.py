@@ -13,8 +13,8 @@ class Aquarium(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
     name = db.Column(db.String, nullable=False)
-    livestock = db.relationship("Livestock", backref="aquarium")
-    actions = db.relationship("Action", backref="aquarium")
+    livestock = db.relationship("Livestock", backref="aquarium", cascade="all,delete")
+    actions = db.relationship("Action", backref="aquarium", cascade="all,delete")
 
 
 class Livestock(db.Model):

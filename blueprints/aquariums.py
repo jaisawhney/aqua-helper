@@ -52,8 +52,8 @@ def edit(aquarium_id):
 @aquariums_views.route("/<string:aquarium_id>/delete/", methods=["POST"])
 @login_required
 def delete(aquarium_id):
-    aquarium = Aquarium.query.filter_by(id=aquarium_id, user_id=current_user.id)
-    if aquarium.first():
-        aquarium.delete()
+    aquarium = Aquarium.query.filter_by(id=aquarium_id, user_id=current_user.id).first()
+    if aquarium:
+        db.session.delete(aquarium)
         db.session.commit()
     return redirect(url_for("aquariums.index"))
